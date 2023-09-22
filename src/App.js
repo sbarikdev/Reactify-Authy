@@ -1,23 +1,39 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
+
 import './App.css';
+import Preferences from './components/Preferences/Preferences.js';
+import Dashboard from './components/Dashboard/Dashboard';
+import Navbar from './components/Navbar/Navbar';
+import Alert from './components/Alert';
+import Login from './components/Login/Login';
 
 function App() {
+  const[alert, setAlert]= useState(null);
+  const showAlert=(message,type)=>{
+    setAlert({
+      msg:message,
+      type:type
+    })
+    setTimeout(() => {
+      setAlert(null);
+    }, 1500);
+}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <h1>Application</h1>
+    <Router>
+    <Navbar/>
+    <Alert alert={alert}/>
+    <div className='container'>
+     <Routes>
+     <Route exact path="/" element={<Dashboard showAlert={showAlert}/>}/>
+     <Route exact path="/preferences" element={<Preferences/>}/>
+     <Route exact path="/login" element={<Login showAlert={showAlert}/>}/>
+    </Routes>
+    </div>
+    </Router>
     </div>
   );
 }
