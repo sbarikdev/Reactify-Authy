@@ -26,7 +26,8 @@ let navigate = useNavigate();
             
           }
           else{
-            props.showAlert("invalid credentials" , "danger");
+            alert("invalid credentials");
+            // props.showAlert("invalid credentials" , "danger");
           }
     }
     const onChange=(e)=>{
