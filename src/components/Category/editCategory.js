@@ -20,16 +20,32 @@ import {
 function EditCategory(props) {
     const [data,setData]=useState([])
     // const [image, setImage] = useState({ base64: '', files: [] });
-    const [name, setName] = useState(data?.name ? data.name : "");
-    const [description, setDescription] = useState(data?.description ? data.description : "");
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
     const navigate = useNavigate();
     const {id}= useParams()
 
+
+    // const FetchDetails = ()=>{
+    //     axios.get(`${API_URL}category_list?id=${id}`).then((res)=>{
+    //         console.log(res.data.data[0])
+    //         console.log('helloworld---->satyajit here')
+    //         setData(res.data.data[0])
+    //         }).catch(err=>{
+    //         console.log(err)
+    //         })
+    //     }
+    // useEffect(() => {
+    //   FetchDetails();
+    // }, []);
 
     const FetchDetails = ()=>{
         axios.get(`${API_URL}category_list?id=${id}`).then((res)=>{
             console.log(res.data.data[0])
             console.log('helloworld---->satyajit here')
+            const result = res.data.data[0]
+            setName(result.name)
+            setDescription(result.description)
             setData(res.data.data[0])
             }).catch(err=>{
             console.log(err)
@@ -75,7 +91,7 @@ function EditCategory(props) {
     return (
         <Container size="sm">
             <Card shadow="sm">
-                <h1>Edit Category</h1>
+                <h1>Edit Category: {name}</h1>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
                     <Grid>
                         <Col span={12}>
