@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { API_URL } from '../../constant/index';
-import './login.css';
+import './Register.css';
 
-const Login = (props) => {
+const Register = (props) => {
   const [credentials,setCredentials] = useState({mobile_number:"",password:""})
 let navigate = useNavigate();
   
@@ -23,9 +23,7 @@ let navigate = useNavigate();
             //save the auth token and redirect
             localStorage.setItem('token',json.authtoken);
             props.showAlert("Logged in Successfully" , "success");
-            navigate("/");
-            
-            
+            navigate("/");   
           }
           else{
             alert("invalid credentials");
@@ -37,27 +35,29 @@ let navigate = useNavigate();
       }
 
   return (
+<div class="containerLogin">
+  <div class="card">
+    <h2>Register Form</h2>
+    <form onSubmit={handleSubmit}>
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" placeholder="Enter your full name"/>
 
-    <div class="containerLogin">
-      <div class="card">
-        <h2>Login Form</h2>
-        <form onSubmit={handleSubmit}>
-          <label for="email">Email</label>
-          <input type="email" className="form-control" value={credentials.mobile_number} onChange={onChange} id="mobile_number" name="mobile_number" aria-describedby="emailHelp" placeholder="Enter your Email"/>
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email"/>
 
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" className="form-control" value={credentials.password} onChange={onChange} placeholder="Enter your password"/>
+      <label for="new-password">New Password</label>
+      <input type="password" id="new-password" placeholder="Enter your new password"/>
 
-          <button type="submit">Login</button>
-        </form>
-        <div class="switch">Don't have an account? <a href="/register">Register here</a></div>
-      </div>
-    </div>
+      <button type="submit">Register</button>
+    </form>
+    <div class="switch">Already have an account? <a href="/login">Login here</a></div>
+  </div>
+</div>
 
   )
 }
 
-export default Login
+export default Register
 
 
 

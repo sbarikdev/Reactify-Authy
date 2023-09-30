@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Navbar from './components/Navbar/Navbar';
 import Alert from './components/Alert';
 import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 import Category from './components/Category/category';
 import CategoryDetails from './components/Category/CategoryDetails';
 import AddCategory from './components/Category/AddCategory';
@@ -26,7 +27,6 @@ function App() {
 
   return (
     <div className="wrapper">
-      <h1>Application</h1>
     <Router>
     <Navbar/>
     <Alert alert={alert}/>
@@ -39,6 +39,7 @@ function App() {
      <Route exact path="/category" element={<Category showAlert={showAlert}/>}/>
      <Route exact path="/category/:id" element={<CategoryDetails showAlert={showAlert}/>}/>
      <Route exact path="/login" element={<Login showAlert={showAlert}/>}/>
+     <Route exact path="/register" element={<Register showAlert={showAlert}/>}/>
     </Routes>
     </div>
     </Router>

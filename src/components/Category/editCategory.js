@@ -25,20 +25,6 @@ function EditCategory(props) {
     const navigate = useNavigate();
     const {id}= useParams()
 
-
-    // const FetchDetails = ()=>{
-    //     axios.get(`${API_URL}category_list?id=${id}`).then((res)=>{
-    //         console.log(res.data.data[0])
-    //         console.log('helloworld---->satyajit here')
-    //         setData(res.data.data[0])
-    //         }).catch(err=>{
-    //         console.log(err)
-    //         })
-    //     }
-    // useEffect(() => {
-    //   FetchDetails();
-    // }, []);
-
     const FetchDetails = ()=>{
         axios.get(`${API_URL}category_list?id=${id}`).then((res)=>{
             console.log(res.data.data[0])
@@ -89,6 +75,7 @@ function EditCategory(props) {
     console.log(data.name)
     console.log(data.description)
     return (
+        <main>
         <Container size="sm">
             <Card shadow="sm">
                 <h1>Edit Category: {name}</h1>
@@ -127,6 +114,7 @@ function EditCategory(props) {
                 </form>
             </Card>
         </Container>
+        </main>
     );
 }
 

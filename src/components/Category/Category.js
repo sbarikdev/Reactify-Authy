@@ -2,8 +2,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link} from 'react-router-dom';
-import { notifications } from '@mantine/notifications';
+// import { notifications } from '@mantine/notifications';
 import { API_URL } from '../../constant/index';
+import {
+    Input,
+} from '@mantine/core';
+import './category.css';
 
 function Category(props) {
   const [data, setData] = useState([]);
@@ -17,6 +21,10 @@ function Category(props) {
         console.log(err)
     })
   }
+
+  useEffect(() => {
+    fetchInfo();
+  }, []);
 
   const removeData = (id) => {
     const confirmed = window.confirm('Are you sure you want to delete this item?');
@@ -35,33 +43,57 @@ function Category(props) {
         }
     };
 
-  useEffect(() => {
-    fetchInfo();
-  }, []);
+    // const [items, setItems] = useState(initialItems);
+    const [searchTerm, setSearchTerm] = useState('');
 
+    // Function to update the search term
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
+    // Function to filter items based on the search term
+    const filteredItems = data.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   return (
-    <div className="App">
+        <main>
+            <br></br>
+            
+        <h1>Category table:  <Link to={{pathname: `/addcategory` }}>Add category</Link> </h1>
+        <Input
+            type="text"
+            placeholder="Search by Item Name"
+            value={searchTerm}
+            onChange={handleSearch}
+        />
+        <figure class="wrapper">
         <table>
+            <caption class="visually-hidden">Product plans and their available features</caption>
+
             <thead>
-            <Link to={{pathname: `/addcategory` }}><button>Add category</button></Link>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                </tr>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
             </thead>
             <tbody>
-                {data.map((r,i)=>(
-                    <tr key={i}>
-                        <td>{r.id}</td>
-                        <td><Link to={{pathname: `/category/${r.id}` }}><button>{r.name}</button></Link></td>
-                        <td><Link to={{pathname: `/editcategory/${r.id}` }}><button>update </button></Link></td>
-                        <td><button className='button' onClick={() => removeData(r.id)}>Delete</button></td>
-                    </tr>
-                ))}
+            {filteredItems.map((r,i)=>(
+            <tr key={i}>
+                <th scope="row">{r.id}</th>
+                <td><Link to={{pathname: `/category/${r.id}` }}>{r.name}</Link></td>
+                <td>{r.description}</td>
+                <td><Link to={{pathname: `/editcategory/${r.id}` }}><button>update </button></Link></td>
+                <td><button className='button' onClick={() => removeData(r.id)}>Delete</button></td>
+            </tr>
+            ))}
             </tbody>
         </table>
-    </div>
+        </figure>
+        </main>
   );
 }
 

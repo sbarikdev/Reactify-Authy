@@ -55,6 +55,7 @@ function AddCategory(props) {
     };
 
     return (
+        <main>
         <Container size="sm">
             <Card shadow="sm">
                 <h1>Add Category</h1>
@@ -93,6 +94,7 @@ function AddCategory(props) {
                 </form>
             </Card>
         </Container>
+        </main>
     );
 }
 
