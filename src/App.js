@@ -7,8 +7,10 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Navbar from './components/Navbar/Navbar';
 import Alert from './components/Alert';
 import Login from './components/Login/Login';
-import Category from './components/Category/Category';
+import Category from './components/Category/category';
 import CategoryDetails from './components/Category/CategoryDetails';
+import AddCategory from './components/Category/AddCategory';
+import EditCategory from './components/Category/editCategory';
 
 function App() {
   const[alert, setAlert]= useState(null);
@@ -31,6 +33,8 @@ function App() {
     <div className='container'>
      <Routes>
      <Route exact path="/" element={<Dashboard showAlert={showAlert}/>}/>
+     <Route exact path="/addcategory" element={<AddCategory showAlert={showAlert}/>}/>
+     <Route exact path="/editcategory/:id" element={<EditCategory showAlert={showAlert}/>}/>
      <Route exact path="/preferences" element={<Preferences/>}/>
      <Route exact path="/category" element={<Category showAlert={showAlert}/>}/>
      <Route exact path="/category/:id" element={<CategoryDetails showAlert={showAlert}/>}/>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { API_URL } from '../../constant/index';
 
 const Login = (props) => {
   const [credentials,setCredentials] = useState({mobile_number:"",password:""})
@@ -7,7 +8,7 @@ let navigate = useNavigate();
   
     const handleSubmit= async(e)=>{
         e.preventDefault();
-        const response = await fetch("http://localhost:8000/login", {
+        const response = await fetch(`${API_URL}login`, {
             method: "POST", 
             headers: {
               'Content-Type': 'application/json'

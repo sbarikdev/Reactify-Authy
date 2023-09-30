@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { API_URL } from '../../constant/index';
 
 const Detail = () => {
   const {id}= useParams()
-  const imageURL = 'http://localhost:8000/';
+//   const imageURL = 'http://localhost:8000/';
   const [data,setData]=useState([])
   const FetchDetails = ()=>{
-    axios.get(`http://localhost:8000/category_list?id=${id}`).then((res)=>{
+    
+    axios.get(`${API_URL}category_list?id=${id}`).then((res)=>{
         console.log(res.data.data)
         setData(res.data.data)
     }).catch(err=>{
