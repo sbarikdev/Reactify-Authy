@@ -16,7 +16,7 @@ const Detail = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
 
   const FetchDetails = ()=>{
-    axios.get(`${API_URL}product_list?cat_id=`).then((res)=>{
+    axios.get(`${API_URL}product_list?cat_id=${selectedCategory}`).then((res)=>{
         setData(res.data.data)
         setProducts(res.data.data);
         setFilteredProducts(res.data.data);
@@ -26,7 +26,7 @@ const Detail = () => {
   }
   useEffect(() => {
     FetchDetails();
-  }, []);
+  }, [selectedCategory]);
 
     //Product search
     const [searchTerm, setSearchTerm] = useState('');
@@ -42,10 +42,9 @@ const Detail = () => {
         if (category === 'all') {
           setFilteredProducts(products); // Show all products
         } else {
-          const filtered = products.filter(product => product.category === category);
-          setFilteredProducts(filtered);
+          setSelectedCategory(category);
         }
-        setSelectedCategory(category);
+   
       };
 
   return (
@@ -63,15 +62,18 @@ const Detail = () => {
         <aside class="filter">
             <h2>Filter</h2>
             <label for="category">Category:</label>
-            <select id="category">
-                <option onClick={() => filterProductsByCategory('all')} value="all">All</option>
-                <option onClick={() => filterProductsByCategory('3')} value="3">Category 3</option>
-                <option onClick={() => filterProductsByCategory('4')} value="4">Category 4</option>
+            <select id="category"
+            value={selectedCategory}
+            onChange={e => setSelectedCategory(e.target.value)}
+            >
+                <option value="">All</option>
+                <option  value="3">Category 3</option>
+                <option value="4">Category 4</option>
                 
             </select>
 
-            <label for="price-range">Price Range:</label>
-            <select id="price-range">
+        <label for="price-range">Price Range:      {selectedCategory}</label>
+            <select id="price-range"> 
                 <option value="all">All</option>
                 <option value="0-50">$0 - $50</option>
                 <option value="50-100">$50 - $100</option>
@@ -80,6 +82,7 @@ const Detail = () => {
         </aside>
         <main>
         <section class="product-list">
+    
         {filteredProducts.map((r,i)=>(
             <div>
             <Link to={{pathname: `/productdetail/${r.id}` }}><img src={r.image} width="100" height="60" alt="Product 1"/></Link>
