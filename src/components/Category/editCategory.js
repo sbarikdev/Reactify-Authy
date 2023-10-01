@@ -27,8 +27,6 @@ function EditCategory(props) {
 
     const FetchDetails = ()=>{
         axios.get(`${API_URL}category_list?id=${id}`).then((res)=>{
-            console.log(res.data.data[0])
-            console.log('helloworld---->satyajit here')
             const result = res.data.data[0]
             setName(result.name)
             setDescription(result.description)

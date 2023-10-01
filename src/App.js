@@ -12,6 +12,9 @@ import Category from './components/Category/category';
 import CategoryDetails from './components/Category/CategoryDetails';
 import AddCategory from './components/Category/AddCategory';
 import EditCategory from './components/Category/editCategory';
+import ProductList from './components/Product/ProductList';
+import ProductDetail from './components/Product/ProductDetail';
+// import Cart from './components/cart';
 
 function App() {
   const[alert, setAlert]= useState(null);
@@ -38,6 +41,9 @@ function App() {
      <Route exact path="/preferences" element={<Preferences/>}/>
      <Route exact path="/category" element={<Category showAlert={showAlert}/>}/>
      <Route exact path="/category/:id" element={<CategoryDetails showAlert={showAlert}/>}/>
+     <Route exact path="/productlist" element={<ProductList showAlert={showAlert}/>}/>
+     <Route exact path="/productdetail/:id" element={<ProductDetail showAlert={showAlert}/>}/>
+     {/* <Route exact path="/cart" element={<Cart showAlert={showAlert}/>}/> */}
      <Route exact path="/login" element={<Login showAlert={showAlert}/>}/>
      <Route exact path="/register" element={<Register showAlert={showAlert}/>}/>
     </Routes>

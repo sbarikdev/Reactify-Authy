@@ -55,7 +55,7 @@ const Navbar = () => {
             </div>
             <ul class="menu-items">
                 <li><a href="/">Home</a></li>
-                <li><a href="/preferences">Preferences</a></li>
+                <li><a href="/productlist">Product</a></li>
                 <li><a href="/category">Category</a></li>
                 <li><a href="#">Menu</a></li>
             {!localStorage.getItem('token')?
