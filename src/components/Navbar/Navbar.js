@@ -57,7 +57,7 @@ const Navbar = () => {
                 <li><a href="/">Home</a></li>
                 <li><a href="/productlist">Product</a></li>
                 <li><a href="/category">Category</a></li>
-                <li><a href="#">Menu</a></li>
+                <li><a href="/cart">Cart</a></li>
             {!localStorage.getItem('token')?
               <form className="d-flex" role="search">
                 <li><a href="/login">Login</a></li>
