@@ -44,29 +44,11 @@ const Detail = () => {
         if (category === 'all') {
           setFilteredProducts(products); // Show all products
         } else {
-          setSelectedCategory(category);
+          const filtered = products.filter(product => product.category === category);
+          setFilteredProducts(filtered);
         }
-   
+        setSelectedCategory(category);
       };
-
-  const addToCart = (product) => {
-    axiosInstance.post('/cart', {
-      product_id: product.id,
-      quantity: 1,
-    })
-    .then((res)=>{
-        console.log(res)
-        alert("Product added to cart")
-    }
-    )
-    .catch(err=>{
-        console.log(err)
-        alert("Product not added to cart")
-    })
-
-
-
-  };
 
   return (
     <body>
@@ -103,8 +85,7 @@ const Detail = () => {
         </aside>
         <main>
         <section class="product-list">
-    
-        {filteredItems.map((r,i)=>(
+        {filteredProducts.map((r,i)=>(
             <div>
             <Link to={{pathname: `/productdetail/${r.id}` }}><img src={r.image} width="100" height="60" alt="Product 1"/></Link>
             <h2>{r.name}</h2>
