@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../../constant/index';
+import { axiosInstance } from '../../constant';
 // import {addToCart} from '../Cart/Cart.js';
 // import {
 //     Container,
@@ -48,6 +49,25 @@ const Detail = () => {
    
       };
 
+  const addToCart = (product) => {
+    axiosInstance.post('/cart', {
+      product_id: product.id,
+      quantity: 1,
+    })
+    .then((res)=>{
+        console.log(res)
+        alert("Product added to cart")
+    }
+    )
+    .catch(err=>{
+        console.log(err)
+        alert("Product not added to cart")
+    })
+
+
+
+  };
+
   return (
     <body>
          <br></br><br></br><br></br>
@@ -90,7 +110,7 @@ const Detail = () => {
             <h2>{r.name}</h2>
             <p>{r.description}</p>
             <p>Price: $ {r.price}</p>
-            <button >Add to Cart</button>
+            <button onClick={()=>addToCart(r)} >Add to Carts</button>
             </div>
         ))}
   
