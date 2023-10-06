@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Cart.js'
+import { AxiosInstance, axiosInstance } from '../../constant';
 
 function Cart() {
   // Define a state variable to store the cart items
@@ -12,15 +13,32 @@ function Cart() {
     { id: 3, name: 'Product 3', price: 5.99 },
   ];
 
-  // Function to add a product to the cart
-  const addToCart = (product) => {
-    setCart([...cart, product]);
-  };
+  // // Function to add a product to the cart
+  // const addToCart = (product) => {
+  //   axiosInstance.post('/cart', {
+  //     product_id: product.id,
+  //   })
+  //   setCart([...cart, product]);
+  // };
+
+
+  useEffect(() => {
+    axiosInstance.get('/cart')
+    .then((res)=>{
+        console.log(res)
+        setCart(res.data.data)
+    }
+    )
+  }, []);
+
 
   // Function to calculate the total price of items in the cart
   const calculateTotal = () => {
     return cart.reduce((total, product) => total + product.price, 0);
   };
+
+  // const total = calculateTotal();
+  // alert(total);
 
   return (
     <main>
@@ -58,51 +76,40 @@ function Cart() {
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td data-th="Product">
-                <div class="row">
-                    <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive" /></div>
-                    <div class="col-sm-10">
-                    <h4 class="nomargin">Product 1</h4>
+            
+            {
+              cart?.map((item, index) => (
+                <tr>
+                  <td data-th="Product">
+                    <div class="row">
+                      <div class="col-sm-2 hidden-xs"><img src={item.product_image} alt="..." class="img-responsive" /></div>
+                      <div class="col-sm-10">
+                        <h4 class="nomargin">
+                          {item?.product_name}
+                        </h4>
+                      </div>
                     </div>
-                </div>
-                </td>
-                <td data-th="Price">$5.11</td>
-                <td data-th="Quantity">
-                <input type="number" class="form-control text-center" value="1"/>
-                </td>
-                <td data-th="Subtotal" class="text-center">$5.11</td>
-                <td class="actions" data-th="">
-                {/* <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button> */}
-                <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td data-th="Product">
-                <div class="row">
-                    <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive" /></div>
-                    <div class="col-sm-10">
-                    <h4 class="nomargin">Product 1</h4>
-                    </div>
-                </div>
-                </td>
-                <td data-th="Price">$5.11</td>
-                <td data-th="Quantity">
-                <input type="number" class="form-control text-center" value="1"/>
-                </td>
-                <td data-th="Subtotal" class="text-center">$5.11</td>
-                <td class="actions" data-th="">
-                {/* <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button> */}
-                <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
-                </td>
-            </tr>
+                  </td>
+                  <td data-th="Price">${item.product_price}</td>
+                  <td data-th="Quantity">
+                    <input type="number" class="form-control text-center" value={item.quantity} />
+                  </td>
+                  <td data-th="Subtotal" class="text-center">${item.product_price * item.quantity}</td>
+                  <td class="actions" data-th="">
+                    {/* <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button> */}
+                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                  </td>
+                </tr>
+              ))
+            }
+
             
             </tbody>
             <tfoot>
             <tr>
                 <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                 <td colspan="2" class="hidden-xs"></td>
-                <td class="hidden-xs text-center"><strong>Total $ 5.11</strong></td>
+                <td class="hidden-xs text-center"><strong>Total </strong></td>
                 <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
             </tr>
             </tfoot>

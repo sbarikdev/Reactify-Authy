@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { API_URL } from '../../constant/index';
-import './login.css';
+// import './login.css';
 
 const Login = (props) => {
   const [credentials,setCredentials] = useState({mobile_number:"",password:""})
