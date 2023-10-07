@@ -7,7 +7,7 @@ import Navbar from './components/Navbar/Navbar';
 import Alert from './components/Alert';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import Category from './components/Category/Category';
+import Category from './components/Category/category';
 import CategoryDetails from './components/Category/CategoryDetails';
 import AddCategory from './components/Category/AddCategory';
 import EditCategory from './components/Category/editCategory';

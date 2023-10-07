@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { API_URL } from '../../constant/index';
+import { API_URL, axiosInstance } from '../../constant/index';
 import {
     Container,
 } from '@mantine/core';
@@ -14,6 +14,7 @@ const Detail = () => {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
   const [price, setPrice] = useState('');
+  const [product_id, setProduct_id] = useState('');
 
   const FetchDetails = ()=>{
     
@@ -24,6 +25,7 @@ const Detail = () => {
         setDescription(result.description)
         setImage(result.image) 
         setPrice(result.price)
+        setProduct_id(result.id)
 
     }).catch(err=>{
         console.log(err)
@@ -32,6 +34,26 @@ const Detail = () => {
   useEffect(() => {
     FetchDetails();
   }, []);
+
+
+  const addToCart = (product) => {
+    axiosInstance.post('/cart', {
+      product_id: product.id,
+      quantity: 1,
+    })
+    .then((res)=>{
+        console.log(res)
+        alert("Product added to cart")
+    }
+    )
+    .catch(err=>{
+        console.log(err)
+      alert("Product  not added to cart")
+    })
+
+
+
+  };
 
   return (
     <body>
@@ -48,7 +70,7 @@ const Detail = () => {
                 <p class="price">${price}</p>
                 <label for="quantity">Quantity:</label>
                 <input type="number" id="quantity" name="quantity" value="1" min="1"/>
-                <button>Add to Cart</button>
+                <button onClick={()=>addToCart(data)}>Add to Cart</button>
             </div>
         </section>
     </main>

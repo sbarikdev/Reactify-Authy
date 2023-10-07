@@ -1,25 +1,37 @@
+import axios from 'axios';
+import { API_URL } from '../../constant';
 import React, { useState, useEffect } from 'react';
 import './Cart.js'
-import { AxiosInstance, axiosInstance } from '../../constant';
+import { axiosInstance } from '../../constant';
+import { useNavigate } from 'react-router-dom';
 
-function Cart() {
+function Cart(props) {
+  const naviage = useNavigate();
   // Define a state variable to store the cart items
   const [cart, setCart] = useState([]);
-
-  // Sample product data
-  const products = [
-    { id: 1, name: 'Product 1', price: 10.99 },
-    { id: 2, name: 'Product 2', price: 19.99 },
-    { id: 3, name: 'Product 3', price: 5.99 },
-  ];
+  const cartLength = cart.length;
 
   // // Function to add a product to the cart
-  // const addToCart = (product) => {
-  //   axiosInstance.post('/cart', {
-  //     product_id: product.id,
-  //   })
-  //   setCart([...cart, product]);
-  // };
+
+
+  const removeFromCart = (id) => {
+    const confirmed = window.confirm('Are you sure you want to delete this item?');
+
+    if (confirmed){
+      axiosInstance.delete(`${API_URL}cart?id=${id}`).then(res => {
+          console.log(res)
+            // const del = category.filter(category => id !== category.id)
+            // setCategory(del);
+            props.showAlert("Category deleted Successfully" , "success");
+            window.location.reload();
+            
+        }).catch((err) => {
+            console.log(err);
+            props.showAlert("Something Went Wrong" , "failure");
+        });
+        }
+    };
+
 
 
   useEffect(() => {
@@ -46,22 +58,6 @@ function Cart() {
             {/* <h1>Shopping Cart:</h1> */}
             <br></br><br></br>
     <div>
-      {/* <h1>Shopping Cart</h1>
-      <div className="product-list">
-        {products.map((product) => (
-          <div key={product.id} className="product">
-            <p>{product.name} - ${product.price}</p>
-            <button onClick={() => addToCart(product)}>Add to Cart</button>
-          </div>
-        ))}
-      </div>
-      <h2>Cart</h2>
-      <ul>
-        {cart.map((item, index) => (
-          <li key={index}>{item.name} - ${item.price}</li>
-        ))}
-      </ul>
-      <p>Total: ${calculateTotal()}</p> */}
 
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
         <div class="container">
@@ -85,7 +81,7 @@ function Cart() {
                       <div class="col-sm-2 hidden-xs"><img src={item.product_image} alt="..." class="img-responsive" /></div>
                       <div class="col-sm-10">
                         <h4 class="nomargin">
-                          {item?.product_name}
+                          {item.product_name}
                         </h4>
                       </div>
                     </div>
@@ -97,7 +93,7 @@ function Cart() {
                   <td data-th="Subtotal" class="text-center">${item.product_price * item.quantity}</td>
                   <td class="actions" data-th="">
                     {/* <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button> */}
-                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                    <button onClick={()=>removeFromCart(item.id)} class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
                   </td>
                 </tr>
               ))
@@ -109,7 +105,7 @@ function Cart() {
             <tr>
                 <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                 <td colspan="2" class="hidden-xs"></td>
-                <td class="hidden-xs text-center"><strong>Total </strong></td>
+                <td class="hidden-xs text-center"><strong>Total</strong></td>
                 <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
             </tr>
             </tfoot>
