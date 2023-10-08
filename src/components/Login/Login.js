@@ -4,18 +4,19 @@ import { API_URL } from '../../constant/index';
 // import './login.css';
 
 const Login = (props) => {
-  const [credentials,setCredentials] = useState({mobile_number:"",password:""})
+  const [credentials,setCredentials] = useState({country_code:"+91",mobile_number:"",password:""})
 let navigate = useNavigate();
   
     const handleSubmit= async(e)=>{
         e.preventDefault();
+        const {country_code,mobile_number,password} = credentials;
         const response = await fetch(`${API_URL}login`, {
             method: "POST", 
             headers: {
               'Content-Type': 'application/json'
               
             },
-            body: JSON.stringify({mobile_number:credentials.mobile_number,password:credentials.password})
+            body: JSON.stringify({country_code,mobile_number,password})
           });
           const json = await response.json();
           console.log(json);
@@ -43,7 +44,7 @@ let navigate = useNavigate();
         <h2>Login Form</h2>
         <form onSubmit={handleSubmit}>
           <label for="email">Email</label>
-          <input type="email" className="form-control" value={credentials.mobile_number} onChange={onChange} id="mobile_number" name="mobile_number" aria-describedby="emailHelp" placeholder="Enter your Email"/>
+          <input type="text" className="form-control" value={credentials.mobile_number} onChange={onChange} id="mobile_number" name="mobile_number" aria-describedby="emailHelp" placeholder="Enter your Email"/>
 
           <label for="password">Password</label>
           <input type="password" id="password" name="password" className="form-control" value={credentials.password} onChange={onChange} placeholder="Enter your password"/>
