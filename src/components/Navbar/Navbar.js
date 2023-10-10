@@ -5,8 +5,8 @@ import './Navbar.css';
 
 const Navbar = () => {
 
-  const [cart, setCart] = useState([])
-  const cartLength = cart.length;
+  // const [cart, setCart] = useState([])
+  // const cartLength = cart.length;
 
     let navigate=useNavigate();
     
@@ -16,14 +16,14 @@ const Navbar = () => {
     }
     const location = useLocation();
 
-    useEffect(() => {
-      axiosInstance.get('/cart')
-      .then((res)=>{
-          console.log(res)
-          setCart(res.data.data)
-      }
-      )
-    }, []);
+  //   useEffect(() => {
+  //     axiosInstance.get('/cart')
+  //     .then((res)=>{
+  //         console.log(res)
+  //         setCart(res.data.data)
+  //     }
+  //     )
+  //   }, []);
 
   return (
     <div>
@@ -39,7 +39,7 @@ const Navbar = () => {
                     <li><a href="/">Home</a></li>
                     <li><a href="/productlist">Product</a></li>
                     <li><a href="/category">Category</a></li>
-                    <li><a href="/cart">Cart: {cartLength}</a></li>
+                    <li><a href="/cart">Cart</a></li>
                 {!localStorage.getItem('token')?
                   <form className="d-flex" role="search">
                     <li><a href="/login">Login</a></li>

@@ -9,8 +9,18 @@ import { axiosInstance } from '../../constant';
 //     Input
 // } from '@mantine/core';
 import './ProductList.css';
+import { connect, useDispatch } from 'react-redux';
+import { addToCart, removeFromCart } from '../../components/Cart/Redux/cartActions';
 
-const Detail = () => {
+
+// const mapStateToProps = (state, ownProps) => {
+//   const isInCart = state.cart.cartItems.some((item) => item.id === ownProps.products.id);
+//   return {
+//     isInCart,
+//   };
+// };
+
+const Detail = ({addToCart, removeFromCart}) => {
   const {id} = useParams();
   const [data,setData]=useState([]);
   const [products, setProducts] = useState([]);
@@ -26,9 +36,9 @@ const Detail = () => {
         console.log(err)
     })
   }
-  useEffect(() => {
-    FetchDetails();
-  }, [selectedCategory]);
+    useEffect(() => {
+      FetchDetails();
+    }, [selectedCategory]);
 
     //Product search
     const [searchTerm, setSearchTerm] = useState('');
@@ -49,24 +59,31 @@ const Detail = () => {
    
       };
 
-  const addToCart = (product) => {
-    axiosInstance.post('/cart', {
-      product_id: product.id,
-      quantity: 1,
-    })
-    .then((res)=>{
-        console.log(res)
-        alert("Product added to cart")
+    const disptach = useDispatch();
+
+    const handleAddToCart = (product) =>{
+      disptach(addToCart(product))
+      console.log('test----->',product)
     }
-    )
-    .catch(err=>{
-        console.log(err)
-      alert("Product  not added to cart")
-    })
+    
 
 
+  // const addToCart = (product) => {
+  //   axiosInstance.post('/cart', {
+  //     product_id: product.id,
+  //     quantity: 1,
+  //   })
+  //   .then((res)=>{
+  //       console.log(res)
+  //       alert("Product added to cart")
+  //   }
+  //   )
+  //   .catch(err=>{
+  //       console.log(err)
+  //     alert("Product  not added to cart")
+  //   })
 
-  };
+  // };
 
   return (
     <body>
@@ -93,7 +110,7 @@ const Detail = () => {
                 
             </select>
 
-        <label for="price-range">Price Range:      {selectedCategory}</label>
+        <label for="price-range">Price Range: {selectedCategory}</label>
             <select id="price-range"> 
                 <option value="all">All</option>
                 <option value="0-50">$0 - $50</option>
@@ -110,7 +127,12 @@ const Detail = () => {
             <h2>{r.name}</h2>
             <p>{r.description}</p>
             <p>Price: $ {r.price}</p>
-            <button onClick={()=>addToCart(r)} >Add to Carts</button>
+            {/* {isInCart ? (
+                <button onClick={() => removeFromCart(r.id)}>Remove from Cart</button>
+              ) : (
+                <button onClick={() => addToCart(r)}>Add to Cart</button>
+              )} */}
+            <button onClick={()=>handleAddToCart(r)} >Add to Carts</button>
             </div>
         ))}
   
@@ -121,4 +143,7 @@ const Detail = () => {
   )
 }
 
-export default Detail
+// export default Detail
+
+// export default connect(mapStateToProps, { addToCart, removeFromCart })(Detail);
+export default connect(null, { addToCart })(Detail);

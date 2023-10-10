@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { notifications } from '@mantine/notifications';
 import { useNavigate } from 'react-router-dom'
 import { API_URL } from '../../constant/index';
@@ -18,18 +18,18 @@ import {
 } from '@mantine/core';
 
 function AddCategory(props) {
-    // const [image, setImage] = useState({ base64: '', files: [] });
+    const [image, setImage] = useState({ base64: '', files: [] });
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const navigate = useNavigate();
 
-    // const isFile = (input) => "File" in window && input instanceof File;
+    const isFile = (input) => "File" in window && input instanceof File;
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('name', name);
         formData.append('description', description);
-        // isFile(image) && formData.append('image', image);
+        isFile(image) && formData.append('image', image);
         axios.post(`${API_URL}category_list`, formData)
             .then((res) => {
                 console.log(res);
@@ -78,14 +78,16 @@ function AddCategory(props) {
                                 placeholder="Description"
                             />
                         </Col>
-                        {/* <Col span={12}>
-                            <FileInput
+                        <Col span={12}>
+                            <input
+                                type="file"
+                                accept="image/*"
                                 files={image.files}
-                                onChange={setImage}
+                                onChange={(e) => setImage(e.target.files[0])}
                                 label="Image"
                                 placeholder="Image"
                             />
-                        </Col> */}
+                        </Col>
                     </Grid>
 
                     <Button mt="xl" type="submit" color="blue">

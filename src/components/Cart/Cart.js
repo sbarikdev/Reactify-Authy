@@ -4,50 +4,68 @@ import React, { useState, useEffect } from 'react';
 import './Cart.js'
 import { axiosInstance } from '../../constant';
 import { useNavigate } from 'react-router-dom';
+import { connect, useSelector } from 'react-redux';
+import { removeFromCart } from '../Cart/Redux/cartActions';
 
-function Cart(props) {
+
+
+
+const Cart = ({ cartItems }) => {
   const naviage = useNavigate();
   // Define a state variable to store the cart items
   const [cart, setCart] = useState([]);
-  const cartLength = cart.length;
+  console.log('cartItems--->', cartItems)
+  // const cartLength = cartItems.length;
+  // const cartItems = useSelector((state) => state.cart.cartItems);
 
   // // Function to add a product to the cart
 
 
-  const removeFromCart = (id) => {
-    const confirmed = window.confirm('Are you sure you want to delete this item?');
+  // const removeFromCart = (id) => {
+  //   const confirmed = window.confirm('Are you sure you want to delete this item?');
 
-    if (confirmed){
-      axiosInstance.delete(`${API_URL}cart?id=${id}`).then(res => {
-          console.log(res)
-            // const del = category.filter(category => id !== category.id)
-            // setCategory(del);
-            props.showAlert("Category deleted Successfully" , "success");
-            window.location.reload();
+  //   if (confirmed){
+  //     axiosInstance.delete(`${API_URL}cart?id=${id}`).then(res => {
+  //         console.log(res)
+  //           // const del = category.filter(category => id !== category.id)
+  //           // setCategory(del);
+  //           // props.showAlert("Cart item deleted Successfully" , "success");
+  //           window.location.reload();
             
-        }).catch((err) => {
-            console.log(err);
-            props.showAlert("Something Went Wrong" , "failure");
-        });
-        }
-    };
+  //       }).catch((err) => {
+  //           console.log(err);
+  //           // props.showAlert("Something Went Wrong" , "failure");
+  //       });
+  //       }
+  //   };
 
+  // useEffect(() => {
+  //   axiosInstance.get('/cart')
+  //   .then((res)=>{
+  //       console.log(res)
+  //       setCart(res.data.data)
+  //   }
+  //   )
+  // }, []);
 
-
-  useEffect(() => {
-    axiosInstance.get('/cart')
-    .then((res)=>{
-        console.log(res)
-        setCart(res.data.data)
-    }
-    )
-  }, []);
+    // const Cart = ({ cartItems }) => {
+    //   return (
+    //     <div>
+    //       <h2>Shopping Cart</h2>
+    //       <ul>
+    //         {cartItems.map((item, index) => (
+    //           <li key={index}>{item.name}</li>
+    //         ))}
+    //       </ul>
+    //     </div>
+    //   );
+    // };
 
 
   // Function to calculate the total price of items in the cart
-  const calculateTotal = () => {
-    return cart.reduce((total, product) => total + product.price, 0);
-  };
+  // const calculateTotal = () => {
+  //   return cart.reduce((total, product) => total + product.price, 0);
+  // };
 
   // const total = calculateTotal();
   // alert(total);
@@ -74,7 +92,7 @@ function Cart(props) {
             <tbody>
             
             {
-              cart?.map((item, index) => (
+              cartItems.map((item, index) => (
                 <tr>
                   <td data-th="Product">
                     <div class="row">
@@ -116,4 +134,10 @@ function Cart(props) {
   );
 }
 
-export default Cart;
+const mapStateToProps = (state) => {
+  return {
+    cartItems: state.cart.cartItems,
+  };
+};
+
+export default connect(mapStateToProps)(Cart);
