@@ -10,7 +10,7 @@ import { removeFromCart } from '../Cart/Redux/cartActions';
 
 
 
-const Cart = ({ cartItems }) => {
+const Cart = () => {
   const naviage = useNavigate();
   // Define a state variable to store the cart items
   const [cart, setCart] = useState([]);
