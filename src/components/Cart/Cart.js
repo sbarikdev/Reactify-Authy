@@ -14,7 +14,9 @@ const Cart = ({ cartItems }) => {
   const naviage = useNavigate();
   // Define a state variable to store the cart items
   const [cart, setCart] = useState([]);
-  console.log('cartItems--->', cartItems)
+  // console.log('cartItems--->', cartItems)
+  const cartItems = useSelector((state) => state.cart);
+  
   // const cartLength = cartItems.length;
   // const cartItems = useSelector((state) => state.cart.cartItems);
 
