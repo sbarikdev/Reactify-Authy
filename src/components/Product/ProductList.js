@@ -146,4 +146,12 @@ const Detail = ({addToCart, removeFromCart}) => {
 // export default Detail
 
 // export default connect(mapStateToProps, { addToCart, removeFromCart })(Detail);
-export default connect(null, { addToCart })(Detail);
+const mapStateToProps = (state) => ({
+  products: state.products,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addToCart: (product) => dispatch(addToCart(product)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);
